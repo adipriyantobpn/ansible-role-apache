@@ -10,6 +10,14 @@
 {% if vhost.documentroot is defined %}
   DocumentRoot "{{ vhost.documentroot }}"
 {% endif %}
+{% if vhost.errorlog_enabled is defined and vhost.errorlog_enabled == true %}
+  ErrorLog "logs/{{ vhost.servername }}-error.log"
+{% endif %}
+{% if vhost.customlogs is defined %}
+{% for customlog in vhost.customlogs %}
+  CustomLog "logs/{{ vhost.servername }}-{{ customlog.name }}.log" "{{ customlog.format }}"
+{% endfor %}
+{% endif %}
 
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
@@ -43,6 +51,14 @@
 {% endif %}
 {% if vhost.documentroot is defined %}
   DocumentRoot "{{ vhost.documentroot }}"
+{% endif %}
+{% if vhost.errorlog_enabled is defined and vhost.errorlog_enabled == true %}
+  ErrorLog "logs/{{ vhost.servername }}-error.log"
+{% endif %}
+{% if vhost.customlogs is defined %}
+{% for customlog in vhost.customlogs %}
+  CustomLog "logs/{{ vhost.servername }}-{{ customlog.name }}.log" "{{ customlog.format }}"
+{% endfor %}
 {% endif %}
 
   SSLEngine on
